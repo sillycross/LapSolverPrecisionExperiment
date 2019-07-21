@@ -1,21 +1,19 @@
 #include <cstdio>
 #include <cstdlib> 
 #include "gtest/gtest.h"
+#include "common.h"
 
 namespace {
 
 void PrintInformation()
 {
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
 	printf("--------------- General Information ---------------\n");
-	printf("Host:         ");
+    printf("Host:                ");
 	fflush(stdout);
 	std::ignore = system("whoami | tr -d '\\n' && printf '@' && cat /etc/hostname");
-	printf("Build flavor: %s\n", TOSTRING(BUILD_FLAVOR));
-	printf("---------------------------------------------------\n");
-#undef TOSTRING
-#undef STRINGIFY
+    printf("Build flavor:        %s\n", MACROTOSTRING(BUILD_FLAVOR));
+    printf("Floating point type: %s\n", GetFloatingPointPrecision());
+    printf("---------------------------------------------------\n");
 }
 
 }	// annoymous namespace

@@ -33,6 +33,13 @@
 
 #include "common.h"
 
+enum PcgResultFlag
+{
+    Converged = 0,
+    MaxIterReached = 1,
+    Stagnated = 2
+};
+
 struct SolverReturnValue
 {
 	Vec x; int flag; FLOAT relres; int iter; vector<FLOAT> resvec;

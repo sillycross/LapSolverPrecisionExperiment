@@ -3,7 +3,7 @@
 # list of all directories containing .cpp and .h code
 # space separated, no forwardslash in the end
 #
-SRC_DIRS := . solver
+SRC_DIRS := . ./solver ./sanity_tests
 
 # additional base directory for #include
 #
@@ -32,10 +32,10 @@ OBJS := $(SRCS:$(SRC_RELDIR)./%=%)
 OBJS := $(subst .cpp,.o,$(OBJS))
 OBJS := $(subst /,.,$(OBJS))
 
-main: $(OBJS) libgtest.a generated.dependency
+main: $(OBJS) libgtest.a generated.dependency ../../Makefile.real
 	g++ $(FLAGS) $(OBJS) libgtest.a -o main
 
-generated.dependency: $(SRCS_AND_HEADERS)
+generated.dependency: $(SRCS_AND_HEADERS) ../../Makefile.real
 	rm -f ./generated.dependency
 	for srcname in $(SRCS) ; do \
 		objname=$${srcname#"$(SRC_RELDIR)./"}; \

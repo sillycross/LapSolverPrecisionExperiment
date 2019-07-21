@@ -40,7 +40,8 @@ function<AbstractSolver(const AbstractSolver&)> SDDMSolver(const Mat &A, Mat &B)
 			rep(i,0,n-1) { b1[i+1]=b[i]; s+=b[i]; } 
 			b1[0]=-s;
 			FLOAT b1norm=b1.norm(), bnorm=b.norm();
-			rep(i,0,n-1) x1[i+1]=x0[i]; x1[0]=0;
+            rep(i,0,n-1) x1[i+1]=x0[i];
+            x1[0]=0;
 			/*
 			 * ||Bx'-b'||<=tol'*||b'||
 			 * ||Ax-b||<=||Bx'-b'||

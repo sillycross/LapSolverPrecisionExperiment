@@ -38,6 +38,9 @@ typedef unsigned long long ULL;
 #define repd(i,r,l) for (int i=(r); i>=(l); i--)
 #define rept(i,c) for (__typeof((c).begin()) i=(c).begin(); i!=(c).end(); i++)
 
+#define MACROSTRINGIFY(x) #x
+#define MACROTOSTRING(x) MACROSTRINGIFY(x)
+
 #ifndef ONLINE_JUDGE
 #define debug(x) { cerr<<#x<<" = "<<(x)<<endl; }
 #else
@@ -84,5 +87,7 @@ struct __ReleaseAssertFailure
      (static_cast <bool> (expr)						\
       ? void (0)							        \
 : __ReleaseAssertFailure::Fire(#expr, __FILE__, __LINE__, __extension__ __PRETTY_FUNCTION__))
+
+const char* GetFloatingPointPrecision();
 
 #endif
