@@ -23,7 +23,7 @@ TEST(Sanity, SddmSolver)
 	rep(i,0,n-1) x[i]=double(rand())/double(RAND_MAX)*100;
 	Vec b=A*x;
 	
-	int flag; double relres; int iter; vector<double> resvec;
+    int flag; FLOAT relres; int iter; vector<FLOAT> resvec;
 	clock_t t_start = clock();
 	tie(x,flag,relres,iter,resvec)=S.solve(b);
 	clock_t t_end = clock();
@@ -31,11 +31,11 @@ TEST(Sanity, SddmSolver)
 
     ReleaseAssert(relres < 1e-4);
 
-    printf("Relres = %.16lf\n",(A*x-b).norm()/b.norm());
+    printf("Relres = %.16lf\n", FloatToDouble((A*x-b).norm()/b.norm()));
 	rept(it,resvec)
 	{
 		if (it==resvec.begin()) printf("[ "); else printf(", ");
-		printf("%.16lf ",*it);
+        printf("%.16lf ", FloatToDouble(*it));
 	}
 	printf("\n");
 }

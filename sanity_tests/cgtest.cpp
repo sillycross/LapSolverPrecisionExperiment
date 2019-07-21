@@ -15,18 +15,18 @@ TEST(Sanity, pcg)
 	int n=g.n; Vec x(n);
 	rep(i,0,n-1) x[i]=double(rand())/double(RAND_MAX)*100;
 	Vec b=A*x;
-	int flag,iter; double relres;
-	Vec x0; vector<double> rm;
+    int flag,iter; FLOAT relres;
+    Vec x0; vector<FLOAT> rm;
 	AbstractSolver w=PCG(A,JacobiPreconditioner(A));
 	clock_t t_start = clock();
 	//tie(x0,flag,relres,iter,rm)=CG::pcg(A,b,1e-4,-1,JacobiPreconditioner(A));
 	tie(x0,flag,relres,iter,rm)=w.solve(b);
 	clock_t t_end = clock();
 	printf("Elapsed time: %0.3lfs\n", double(t_end - t_start) / double(CLOCKS_PER_SEC));
-	printf("%.16lf\n",(A*x0-b).norm()/b.norm());
-	printf("%.16lf\n",relres);
+    printf("%.16lf\n", FloatToDouble((A*x0-b).norm()/b.norm()));
+    printf("%.16lf\n", FloatToDouble(relres));
 	printf("%d %d\n",flag,iter);
-    rept(it,rm) printf("%.16lf ",*it);
+    rept(it,rm) printf("%.16lf ", FloatToDouble(*it));
     printf("\n");
     ReleaseAssert(relres < 1e-4);
 }

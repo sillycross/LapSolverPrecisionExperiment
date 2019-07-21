@@ -54,6 +54,7 @@ namespace KOSZHelper
 				if (target<=s[mid-1]) r=mid-1; else l=mid+1;
 			}
 			assert(0);
+            __builtin_unreachable();
 		}
 		
 		pair<int,FLOAT> build(KOSZ::DS::nodetype *ds, int l, int r)
@@ -401,7 +402,7 @@ void KOSZ::DS::serere(int x, FLOAT value)
 KOSZ::operator AbstractSolver()
 {
 	KOSZ t=*this;
-	return AbstractSolver([t](const Vec &b, FLOAT tol, int maxit, const Vec &x0) mutable {
+    return AbstractSolver([t](const Vec &b, FLOAT tol, int maxit, const Vec & /*x0*/) mutable {
 		t.setb(b); 
 		return t.solve(tol,maxit);
 	});

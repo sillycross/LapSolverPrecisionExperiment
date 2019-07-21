@@ -62,21 +62,21 @@ namespace IO
 		FILE* ff = fopen(filename.c_str(), "r");
 		if (!ff) { printf("File error.\n"); assert(0); }
 		int n,m;
-		fscanf(ff, "%d%d", &n, &m);
+        ReleaseAssert(fscanf(ff, "%d%d", &n, &m) == 2);
 		char buff[100];
-		fgets(buff,100,ff);	//skip the "order_num" parameter
+        std::ignore = fgets(buff,100,ff);	//skip the "order_num" parameter
 		vector< pair<int,FLOAT> > *e=new vector< pair<int,FLOAT> >[n+1];
 		vector< tuple<int,int,FLOAT> > o;
 		rep(i,1,n) e[i].clear();
 		rep(i,1,n-1)
 		{
-			int x,y; double z; fscanf(ff,"%d%d%lf",&x,&y,&z);
+            int x,y; double z; ReleaseAssert(fscanf(ff,"%d%d%lf",&x,&y,&z) == 3);
 			e[x+1].push_back(make_pair(y+1,z));
 		}
 		o.clear();
 		rep(i,1,m-(n-1))
 		{
-			int x,y; double z; fscanf(ff,"%d%d%lf",&x,&y,&z);
+            int x,y; double z; ReleaseAssert(fscanf(ff,"%d%d%lf",&x,&y,&z) == 3);
 			o.push_back(make_tuple(x+1,y+1,z));
 		}
 		g.n=n; g.e=e; g.o.swap(o);
@@ -89,14 +89,14 @@ namespace IO
 		FILE* ff = fopen(filename.c_str(), "r");
 		if (!ff) { printf("File error.\n"); assert(0); }
 		int n,m;
-		fscanf(ff, "%d%d", &n, &m);
+        ReleaseAssert(fscanf(ff, "%d%d", &n, &m) == 2);
 		char buff[100];
-		fgets(buff,100,ff);	//skip the "order_num" parameter
+        std::ignore = fgets(buff,100,ff);	//skip the "order_num" parameter
 		Graph h(n); 
 		rep(i,1,n) h.e[i].clear();
 		rep(i,1,m)
 		{
-			int x,y; double z; fscanf(ff,"%d%d%lf",&x,&y,&z);
+            int x,y; double z; ReleaseAssert(fscanf(ff,"%d%d%lf",&x,&y,&z) == 3);
 			h.e[x+1].push_back(make_pair(y+1,z));
 			h.e[y+1].push_back(make_pair(x+1,z));
 		}
@@ -116,13 +116,13 @@ namespace IO
 		
 		do
 		{
-			fgets (buff, 100, ff);
+            std::ignore = fgets (buff, 100, ff);
 			c = getc(ff);
 			ungetc(c,ff);
 		} while(c=='%');
 		
 		int n,temp,m;
-		fscanf(ff, "%d%d%d", &n, &temp, &m);
+        ReleaseAssert(fscanf(ff, "%d%d%d", &n, &temp, &m) == 3);
 				
 		int x,y;
 		double z;
@@ -130,7 +130,7 @@ namespace IO
 		Mat A=Mat(n,n);
 		rep(i,1,m)
 		{
-			fscanf(ff,"%d%d%lf",&x,&y,&z);
+            ReleaseAssert(fscanf(ff,"%d%d%lf",&x,&y,&z) == 3);
 			x--; y--;
 			A.entryAddValue(x,y,z);
 			if (x!=y) A.entryAddValue(y,x,z);
@@ -152,13 +152,13 @@ namespace IO
 		
 		do
 		{
-			fgets (buff, 100, ff);
+            std::ignore = fgets (buff, 100, ff);
 			c = getc(ff);
 			ungetc(c,ff);
 		} while(c=='%');
 		
 		int n,temp,m;
-		fscanf(ff, "%d%d%d", &n, &temp, &m);
+        ReleaseAssert(fscanf(ff, "%d%d%d", &n, &temp, &m) == 3);
 		static FLOAT *s=new FLOAT[maxn];
 		rep(i,0,n) s[i]=0;
 		int x,y;
@@ -167,7 +167,7 @@ namespace IO
 		Mat A=Mat(n,n);
 		rep(i,1,m)
 		{
-			fscanf(ff,"%d%d%lf",&x,&y,&z);
+            ReleaseAssert(fscanf(ff,"%d%d%lf",&x,&y,&z) == 3);
 			x--; y--;
 
 			A.entryAddValue(x,y,-z);
@@ -191,13 +191,13 @@ namespace IO
 		
 		do
 		{
-			fgets (buff, 100, ff);
+            std::ignore = fgets (buff, 100, ff);
 			c = getc(ff);
 			ungetc(c,ff);
 		} while(c=='%');
 		
 		int n,m;
-		fscanf(ff, "%d%d", &n, &m);
+        ReleaseAssert(fscanf(ff, "%d%d", &n, &m) == 2);
 		assert(m==1);
 
 		Vec v(n);
@@ -206,7 +206,7 @@ namespace IO
 	     
 		rep(i,0,n-1)
 		{
-			fscanf(ff,"%lf",&z);
+            ReleaseAssert(fscanf(ff,"%lf",&z) == 1);
 			FLOAT zz=z;
 			v[i]=zz;
 		}

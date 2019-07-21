@@ -32,6 +32,7 @@
 #define __ABSTRACTSOLVER_H__
 
 #include "common.h"
+#include "matrix.h"
 
 enum PcgResultFlag
 {

@@ -136,7 +136,7 @@ function<AbstractSolver(const AbstractSolver&)> ContractSolver(const GraphSP &g,
 	h.freeMemory();
 	
 	return [n,hn,which,mp,p,dfsorder,phw,pw,ps,vlis,leafList](const AbstractSolver &S) {
-		return AbstractSolver([=](const Vec &_b, FLOAT tol, int maxit, const Vec &_x0) {
+        return AbstractSolver([=](const Vec &_b, FLOAT tol, int maxit, const Vec & /*_x0*/) {
 			assert(_b.n==n); Vec b=_b; 
 			Vec nb(hn);
 			rep(i,1,hn) ps[i]=0;

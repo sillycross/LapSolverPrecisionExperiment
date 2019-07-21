@@ -19,19 +19,19 @@ TEST(Sanity, Kosz)
 	rep(i,0,n-1) x[i]=double(rand())/double(RAND_MAX)*100;
 	Vec b=A*x;
 	
-	printf("average stretch = %.16lf\n",StretchCalculator::calculateTotalStretch(g)/g.o.size());
+    printf("average stretch = %.16lf\n", FloatToDouble(StretchCalculator::calculateTotalStretch(g)/g.o.size()));
 	
 	KOSZ w=KOSZ(g);
-	double relres; int flag; int iter; vector<double> resvec;
+    FLOAT relres; int flag; int iter; vector<FLOAT> resvec;
 	clock_t t_start = clock();
 	w.setb(b);
 	tie(x,flag,relres,iter,resvec)=w.solve();
 	clock_t t_end = clock();
 	
 	printf("Elapsed time: %0.3lfs\n", double(t_end - t_start) / double(CLOCKS_PER_SEC));
-	printf("%.16lf\n",(A*x-b).norm()/b.norm());
-	printf("%.16lf %d\n",relres,iter);
-    rept(it,resvec) printf("%.16lf ",*it);
+    printf("%.16lf\n", FloatToDouble((A*x-b).norm()/b.norm()));
+    printf("%.16lf %d\n", FloatToDouble(relres),iter);
+    rept(it,resvec) printf("%.16lf ", FloatToDouble(*it));
     printf("\n");
     ReleaseAssert(relres < 1e-6);
     ReleaseAssert(flag == Converged);

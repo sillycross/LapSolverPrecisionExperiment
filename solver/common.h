@@ -49,6 +49,9 @@ typedef unsigned long long ULL;
 
 #define maxn 1000010
 
+#define USE_MPFR
+#define MPFR_PRECISION 1024
+
 #ifdef USE_MPFR
 typedef mpfr::real<MPFR_PRECISION> FLOAT;
 typedef mpfr::real<MPFR_PRECISION> FLOAT128;
@@ -89,5 +92,7 @@ struct __ReleaseAssertFailure
 : __ReleaseAssertFailure::Fire(#expr, __FILE__, __LINE__, __extension__ __PRETTY_FUNCTION__))
 
 const char* GetFloatingPointPrecision();
+
+double FloatToDouble(FLOAT f);
 
 #endif

@@ -5,16 +5,16 @@
 AbstractSolver Richardson(const Mat &A, const GraphSP &g)
 {
 	AbstractSolver S=KOSZ(UltraSparsifier(g,200));
-	return AbstractSolver([A,S](const Vec &b, FLOAT tol, int maxit, const Vec &x0) {
+    return AbstractSolver([A,S](const Vec &b, FLOAT tol, int /*maxit*/, const Vec &x0) {
 		Vec x=x0;
-		double bnorm=b.norm();
+        FLOAT bnorm=b.norm();
 		while (1)
 		{
 			Vec r=b-A*x;
-			double relres=r.norm()/bnorm;
-			printf("%.16lf\n",relres);
+            FLOAT relres=r.norm()/bnorm;
+            printf("%.16lf\n", FloatToDouble(relres));
 			if (relres<tol) { SolverReturnValue ret; ret.x=x; ret.flag=0; return ret; }
-			x=x+S.solve(r)*0.01;
+            x=x+S.solve(r)*FLOAT(0.01);
 		}
 	});
 }
@@ -22,7 +22,7 @@ AbstractSolver Richardson(const Mat &A, const GraphSP &g)
 AbstractSolver Richardson(const Mat &A, const AbstractSolver &precon)
 {
 	return AbstractSolver([A,precon](const Vec &b, FLOAT tol, int maxit, const Vec &x0)->SolverReturnValue {
-		Vec x=x0; Vec bestx; FLOAT bestrelres; int whichit;
+        Vec x=x0; Vec bestx; FLOAT bestrelres; int whichit = -1;
 		Vec r0=precon.solve(b-A*x);
 		int i=0; FLOAT bnorm=b.norm();
 		SolverReturnValue ret;

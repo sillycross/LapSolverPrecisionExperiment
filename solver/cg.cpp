@@ -42,7 +42,7 @@ namespace CG
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const AbstractSolver &precon, const Vec &x0)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon.solve(b,tol); },x0,ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &/*x*/, FLOAT /*err*/, FLOAT tol, Vec &ret) { ret=precon.solve(b,tol); },x0,ret);
 		return ret;
 	}
 	
@@ -56,28 +56,28 @@ namespace CG
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const function<Vec(const Vec&, const Vec&, FLOAT)> &precon, const Vec &x0)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon(b,x,err); },x0,ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT /*tol*/, Vec &ret) { ret=precon(b,x,err); },x0,ret);
 		return ret;
 	}
 	
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const function<Vec(const Vec&, FLOAT)> &precon, const Vec &x0)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon(b,err); },x0,ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &/*x*/, FLOAT err, FLOAT /*tol*/, Vec &ret) { ret=precon(b,err); },x0,ret);
 		return ret;
 	}
 	
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const function<Vec(const Vec&)> &precon, const Vec &x0)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon(b); },x0,ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &/*x*/, FLOAT /*err*/, FLOAT /*tol*/, Vec &ret) { ret=precon(b); },x0,ret);
 		return ret;
 	}
 	
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const AbstractSolver &precon)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon.solve(b,tol); },Vec(A.m),ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &/*x*/, FLOAT /*err*/, FLOAT tol, Vec &ret) { ret=precon.solve(b,tol); },Vec(A.m),ret);
 		return ret;
 	}
 	
@@ -91,42 +91,42 @@ namespace CG
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const function<Vec(const Vec&, const Vec&, FLOAT)> &precon)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon(b,x,err); },Vec(A.m),ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT /*tol*/, Vec &ret) { ret=precon(b,x,err); },Vec(A.m),ret);
 		return ret;
 	}
 	
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const function<Vec(const Vec&, FLOAT)> &precon)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon(b,err); },Vec(A.m),ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &/*x*/, FLOAT err, FLOAT /*tol*/, Vec &ret) { ret=precon(b,err); },Vec(A.m),ret);
 		return ret;
 	}
 	
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit, const function<Vec(const Vec&)> &precon)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=precon(b); },Vec(A.m),ret);
+        pcgsolve(A,b,tol,maxit,[&precon](const Vec &b, const Vec &/*x*/, FLOAT /*err*/, FLOAT /*tol*/, Vec &ret) { ret=precon(b); },Vec(A.m),ret);
 		return ret;
 	}
 
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol, int maxit)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,maxit,[](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=b; },Vec(A.m),ret);
+        pcgsolve(A,b,tol,maxit,[](const Vec &b, const Vec &/*x*/, FLOAT /*err*/, FLOAT /*tol*/, Vec &ret) { ret=b; },Vec(A.m),ret);
 		return ret;
 	}
 
 	SolverReturnValue pcg(const Mat &A, const Vec &b, FLOAT tol)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,tol,-1,[](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=b; },Vec(A.m),ret);
+        pcgsolve(A,b,tol,-1,[](const Vec &b, const Vec &/*x*/, FLOAT /*err*/, FLOAT /*tol*/, Vec &ret) { ret=b; },Vec(A.m),ret);
 		return ret;
 	}
 
 	SolverReturnValue pcg(const Mat &A, const Vec &b)
 	{
 		SolverReturnValue ret;
-		pcgsolve(A,b,1e-6,-1,[](const Vec &b, const Vec &x, FLOAT err, FLOAT tol, Vec &ret) { ret=b; },Vec(A.m),ret);
+        pcgsolve(A,b,1e-6,-1,[](const Vec &b, const Vec &/*x*/, FLOAT /*err*/, FLOAT /*tol*/, Vec &ret) { ret=b; },Vec(A.m),ret);
 		return ret;
 	} 
 }
