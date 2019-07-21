@@ -22,7 +22,7 @@ AbstractSolver Richardson(const Mat &A, const GraphSP &g)
 AbstractSolver Richardson(const Mat &A, const AbstractSolver &precon)
 {
 	return AbstractSolver([A,precon](const Vec &b, FLOAT tol, int maxit, const Vec &x0)->SolverReturnValue {
-        Vec x=x0; Vec bestx; FLOAT bestrelres; int whichit = -1;
+        Vec x=x0; Vec bestx; FLOAT bestrelres = 0; int whichit = -1;
 		Vec r0=precon.solve(b-A*x);
 		int i=0; FLOAT bnorm=b.norm();
 		SolverReturnValue ret;

@@ -49,7 +49,8 @@ typedef unsigned long long ULL;
 
 #define maxn 1000010
 
-#define USE_MPFR
+//#define USE_FLOAT128
+//#define USE_MPFR
 #define MPFR_PRECISION 1024
 
 #ifdef USE_MPFR

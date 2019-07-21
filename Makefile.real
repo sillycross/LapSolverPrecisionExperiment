@@ -11,7 +11,7 @@ INCLUDE_DIRS := solver
 
 # additional g++ compiler flags
 #
-EXTRA_FLAGS := -Wall -Wextra -Werror -ansi -pedantic -lquadmath 
+EXTRA_FLAGS := -Wall -Wextra -Werror -ansi -pedantic 
 
 ##########################################################
 
@@ -33,7 +33,7 @@ OBJS := $(subst .cpp,.o,$(OBJS))
 OBJS := $(subst /,.,$(OBJS))
 
 main: $(OBJS) libgtest.a generated.dependency ../../Makefile.real
-	g++ $(FLAGS) $(OBJS) libgtest.a /usr/lib/x86_64-linux-gnu/libmpfr.a /usr/lib/x86_64-linux-gnu/libgmp.a -o main
+	g++ $(FLAGS) $(OBJS) libgtest.a /usr/lib/x86_64-linux-gnu/libmpfr.a /usr/lib/x86_64-linux-gnu/libgmp.a /usr/lib/x86_64-linux-gnu/libquadmath.so.0.0.0 -o main
 
 generated.dependency: $(SRCS_AND_HEADERS) ../../Makefile.real
 	rm -f ./generated.dependency
