@@ -32,7 +32,7 @@ void PrepareData(Mat& A /*out*/, GraphSP& g /*out*/, Vec& b /*out*/)
         treeFile = g_args[2];
     }
     A = IO::readMMA(matrixFile);
-    if (hasTreeFile)
+    if (!hasTreeFile)
     {
         g = IO::convertLaplacianMatrixToGraphSP(A);
     }
@@ -89,7 +89,7 @@ void PrintResults(FILE* file, const char* algName, const GraphSP& g, const vecto
         {
             fprintf(file, "\n");
         }
-        fprintf(file, "%.16lf", FloatToDouble(res[i]));
+        fprintf(file, "%.16le", FloatToDouble(res[i]));
     }
     fprintf(file, "]\n\n");
 }
@@ -118,7 +118,7 @@ TEST(Benchmark, RunTreePcg)
 
     Vec x; int flag; FLOAT relres; int iter; vector<FLOAT> resvec;
     tie(x,flag,relres,iter,resvec)=S.solve(b,
-                                           1e-6 /*only affects preconditioner tolerance*/,
+                                           1e-10 /*does not matter here, tree precond is accurate*/,
                                            -300 /*force 300 iters*/);
     ReleaseAssert(flag == MaxIterReached || flag == Stagnated);
 
@@ -141,7 +141,7 @@ TEST(Benchmark, RunRecursiveCg)
 
     Vec x; int flag; FLOAT relres; int iter; vector<FLOAT> resvec;
     tie(x,flag,relres,iter,resvec)=S.solve(b,
-                                           1e-6 /*only affects preconditioner tolerance*/,
+                                           1e-10 /*only affects preconditioner tolerance*/,
                                            -300 /*force 300 iters*/);
     ReleaseAssert(flag == MaxIterReached || flag == Stagnated);
 

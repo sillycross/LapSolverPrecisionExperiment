@@ -15,7 +15,7 @@ namespace CG
         vector<FLOAT> &rm=ret.resvec;
         FLOAT customNormForRelres = b.normForPcg(A);
         rm.push_back(r0.normForPcg(A) / customNormForRelres);
-		if (err<tol) { ret.flag=0; ret.relres=err; ret.iter=0; return; }
+        if (err<tol && !forceRun) { ret.flag=0; ret.relres=err; ret.iter=0; return; }
 		Vec mr; precon(r0,x0,err,tol,mr);
 		Vec d0=mr;
 		FLOAT minerr=err; Vec bestx=x0; int whichit=0;
@@ -28,7 +28,7 @@ namespace CG
 			x0=x0+d0*alpha;
 			r0=r0-tmp*alpha;
             FLOAT err=r0.norm()/bnorm; rm.push_back(r0.normForPcg(A) / customNormForRelres);
-			precon(r0,x0,err,tol,mr);
+            precon(r0,x0,err,tol,mr);
 			FLOAT nt=r0*mr;
 			FLOAT beta=nt/t; t=nt;
 			d0=mr+d0*beta;

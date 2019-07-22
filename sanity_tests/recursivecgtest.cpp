@@ -11,7 +11,7 @@ TEST(Sanity, RecursiveCG)
     A = IO::readMMA("sanity_tests/graph.mtx");
     g = IO::convertLaplacianMatrixToGraphSP(A);
 	printf("done reading input\n");
-	AbstractSolver S=RecursiveCG(g);
+    AbstractSolver S=RecursiveCG(g);
 	printf("constructor finished\n");
 	int n=A.n;
 	Vec x(n);

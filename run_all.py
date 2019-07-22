@@ -1,6 +1,6 @@
 from Queue import *
 from threading import *
-import random
+import random, os
 
 all_data = [{
 	'data': 'grid2_10000_iu1000',

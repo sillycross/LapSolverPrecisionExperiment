@@ -26,6 +26,6 @@
 #include "graph.h"
 #include "abstractsolver.h"
 
-AbstractSolver RecursiveCG(const GraphSP &g, int flag = 10);
+AbstractSolver RecursiveCG(const GraphSP &g, int flag = 1);
 
 #endif
