@@ -53,11 +53,15 @@ namespace IO
 {
 	Mat constructMatrixFromGraph(const GraphSP &g);
 	
+    Graph convertLaplacianMatrixToGraph(const Mat &A);
+
 	GraphSP convertLaplacianMatrixToGraphSP(const Mat &A);	//won't report error if matrix is not symmetric
 
 	GraphSP readGraphSP(string filename);
 	
 	GraphSP readGraph(string filename);
+
+    GraphSP specifyTree(const Graph &g, const Mat &A);
 
 	//TOFIX Only works on symmetric mm right now
 	Mat readMML(string filename);

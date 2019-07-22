@@ -283,13 +283,13 @@ namespace TreeFinder
 		if (st1<st2 && 0)
 		{
 			h2.freeMemory();
-			//printf("findLowStretchTree (Dijkstra): average stretch = %.16lf\n",(double)(st1/h1.o.size()));
+            printf("findLowStretchTree (Dijkstra): average stretch = %.16lf\n", FloatToDouble(st1/h1.o.size()));
 			return h1;
 		}
 		else
 		{
 			h1.freeMemory();
-			//printf("findLowStretchTree (MST): average stretch = %.16lf\n",(double)(st2/h2.o.size()));
+            printf("findLowStretchTree (MST): average stretch = %.16lf\n", FloatToDouble(st2/h2.o.size()));
 			return h2;
 		}
 	}

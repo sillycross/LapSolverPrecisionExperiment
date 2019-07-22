@@ -1,6 +1,21 @@
 #include "io.h"
 #include "treefinder.h"
 
+namespace IOHelper
+{
+    vector< pair<int,FLOAT> > e[maxn];
+
+    void dfs(GraphSP &g, int cur, int pre)
+    {
+        rept(it,e[cur])
+            if (it->first!=pre)
+            {
+                g.e[cur].push_back(*it);
+                dfs(g,it->first,cur);
+            }
+    }
+}
+
 namespace IO
 {
 	Mat constructMatrixFromGraph(const GraphSP &g)
@@ -28,13 +43,37 @@ namespace IO
 		A.sortup();
 		return A;
 	}
-	
-	GraphSP convertLaplacianMatrixToGraphSP(const Mat &A)	//won't report error if matrix is not symmetric
-	{
-		assert(A.n==A.m);
-		Graph g(A.n);
-		static FLOAT *s=new FLOAT[maxn];
-		rept(it,A.values)
+
+    Graph convertLaplacianMatrixToGraph(const Mat &A)	//won't report error if matrix is not symmetric
+    {
+        assert(A.n==A.m);
+        Graph g(A.n);
+        static FLOAT *s=new FLOAT[maxn];
+        rept(it,A.values)
+        {
+            int x=it->x, y=it->y; FLOAT z=it->z;
+            if (x!=y)
+            {
+                if (z>0) printf("Warning: Given matrix is not Laplacian, it has positive off-diagonals!\n");
+                s[x]+=z;
+                z=-1.0/z;
+                g.e[x+1].push_back(make_pair(y+1,z));
+            }
+            else
+            {
+                if (z<0) printf("Warning: Given matrix is not Laplacian, it has negative diagonals!\n");
+                s[x]+=z;
+            }
+        }
+        return g;
+    }
+
+    GraphSP convertLaplacianMatrixToGraphSP(const Mat &A)	//won't report error if matrix is not symmetric
+    {
+        assert(A.n==A.m);
+        Graph g(A.n);
+        static FLOAT *s=new FLOAT[maxn];
+        rept(it,A.values)
 		{
 			int x=it->x, y=it->y; FLOAT z=it->z;
 			if (x!=y)
@@ -103,15 +142,31 @@ namespace IO
 		GraphSP g=TreeFinder::findLowStretchTree(h);
 		h.freeMemory();
 		fclose(ff);
-		return g;
-	}
+        return g;
+    }
 
-	//TOFIX Only works on symmetric mm right now
-	Mat readMML(string filename)
-	{
-		FILE* ff = fopen(filename.c_str(), "r");
-		if (!ff) { printf("File error.\n"); assert(0); }
-		int c;
+    GraphSP specifyTree(const Graph &g, const Mat &A)
+    {
+        set< pair<int,int> > s;
+        rept(it,A.values) s.insert(make_pair(it->x,it->y));
+        rep(i,1,g.n) IOHelper::e[i].clear();
+        GraphSP h(g.n);
+        rep(i,1,g.n)
+            rept(it,g.e[i])
+                if (s.find(make_pair(i-1,(it->first)-1))!=s.end())
+                    IOHelper::e[i].push_back(*it);
+                else if (i<it->first)
+                    h.o.push_back(make_tuple(i,it->first,it->second));
+        IOHelper::dfs(h,1,0);
+        return h;
+    }
+
+    //TOFIX Only works on symmetric mm right now
+    Mat readMML(string filename)
+    {
+        FILE* ff = fopen(filename.c_str(), "r");
+        if (!ff) { printf("File error.\n"); assert(0); }
+        int c;
 		char buff[100];
 		
 		do

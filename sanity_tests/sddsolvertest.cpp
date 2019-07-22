@@ -9,7 +9,7 @@
 TEST(Sanity, SddmSolver)
 {
 	Mat A; 
-    A=IO::readMML("sanity_tests/outer_4_inner_2.mtx");
+    A=IO::readMMA("sanity_test/graph.mtx");
 	printf("done reading input\n");
 	AbstractSolver S=SDDSolver(A,[](const Mat &B) {
 		GraphSP g=IO::convertLaplacianMatrixToGraphSP(B);
