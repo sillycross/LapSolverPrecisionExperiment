@@ -53,3 +53,12 @@ FLOAT Vec::norm() const
 	return mysqrt((*this)*(*this));
 } 
 
+FLOAT Vec::normForPcg(const Mat& A) const
+{
+    std::ignore = A;
+#ifdef USE_L_NORM
+    return mysqrt((*this)*(A*(*this)));
+#else
+    return mysqrt((*this)*(*this));
+#endif
+}

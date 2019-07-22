@@ -5,9 +5,16 @@ namespace CG
 	void pcgsolve(const Mat &A, const Vec &b, FLOAT tol, int maxit, const function<void(const Vec&, const Vec&, FLOAT, FLOAT, Vec&)> &precon, const Vec &_x0, SolverReturnValue &ret)
 	{
 		assert(A.n==A.m); assert(A.n==b.n);
+        bool forceRun = false;
+        if (maxit < -1)
+        {
+            maxit = -maxit; forceRun = true;
+        }
 		Vec &x0=ret.x; x0=_x0; Vec r0=b-A*x0;
-		FLOAT bnorm=b.norm(), err=r0.norm()/bnorm; 
-		vector<FLOAT> &rm=ret.resvec; rm.push_back(err);
+        FLOAT bnorm=b.norm(), err=r0.norm()/bnorm;
+        vector<FLOAT> &rm=ret.resvec;
+        FLOAT customNormForRelres = b.normForPcg(A);
+        rm.push_back(r0.normForPcg(A) / customNormForRelres);
 		if (err<tol) { ret.flag=0; ret.relres=err; ret.iter=0; return; }
 		Vec mr; precon(r0,x0,err,tol,mr);
 		Vec d0=mr;
@@ -20,14 +27,14 @@ namespace CG
 			FLOAT alpha=t/(d0*tmp);
 			x0=x0+d0*alpha;
 			r0=r0-tmp*alpha;
-			FLOAT err=r0.norm()/bnorm; rm.push_back(err);
+            FLOAT err=r0.norm()/bnorm; rm.push_back(r0.normForPcg(A) / customNormForRelres);
 			precon(r0,x0,err,tol,mr);
 			FLOAT nt=r0*mr;
 			FLOAT beta=nt/t; t=nt;
 			d0=mr+d0*beta;
 			//printf("CG Iteration #%d, relres %.16lf\n",i,err);
-			if (maxit!=-1 && err<minerr) { minerr=err; bestx=x0; whichit=i; }
-			if (err<tol) { ret.flag=0; ret.relres=err; ret.iter=i; return; }
+            if (maxit!=-1 && err<minerr) { minerr=err; bestx=x0; whichit=i; }
+            if (err<tol && !forceRun) { ret.flag=0; ret.relres=err; ret.iter=i; return; }
 			if (myfabs((err-lasterr)/lasterr)<1e-6)
 			{
 				streak++;

@@ -28,6 +28,8 @@ extern "C" {
 	#include <quadmath.h>
 }
 
+#include "config.h"
+
 using namespace std;
 
 typedef long long LL;
@@ -49,9 +51,11 @@ typedef unsigned long long ULL;
 
 #define maxn 1000010
 
+//#define USE_L_NORM
+
 //#define USE_FLOAT128
 //#define USE_MPFR
-#define MPFR_PRECISION 1024
+//#define MPFR_PRECISION 1024
 
 #ifdef USE_MPFR
 typedef mpfr::real<MPFR_PRECISION> FLOAT;

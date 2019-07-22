@@ -35,6 +35,7 @@
 #define __MATRIX_H__
 
 #include "common.h"
+struct Mat;
 
 struct Vec
 {
@@ -66,6 +67,7 @@ struct Vec
 	}
 	
 	FLOAT norm() const;
+    FLOAT normForPcg(const Mat& A) const;
 };
 
 struct Mat
