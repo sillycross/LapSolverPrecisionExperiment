@@ -26,6 +26,9 @@
 #include "graph.h"
 #include "abstractsolver.h"
 
+extern bool g_sampleFixedEdges;
+extern int g_numEdgesToSample;
+
 AbstractSolver RecursiveCG(const GraphSP &g, int flag = 1);
 
 #endif

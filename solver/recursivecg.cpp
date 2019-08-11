@@ -12,10 +12,17 @@
 #include "treefinder.h"
 #include "richardson.h"
 
+bool g_sampleFixedEdges = false;
+int g_numEdgesToSample;
+
 namespace RecursiveCGHelper
 {
 	int shrinkStrategy(const GraphSP &g)	//returns # of OTE to be sampled, -1 for direct solver
 	{
+        if (g_sampleFixedEdges)
+        {
+            return g_numEdgesToSample;
+        }
         return std::max(50, g.n / 30);
 	}
 }
