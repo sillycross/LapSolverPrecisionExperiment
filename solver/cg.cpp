@@ -35,7 +35,7 @@ namespace CG
 			//printf("CG Iteration #%d, relres %.16lf\n",i,err);
             if (maxit!=-1 && err<minerr) { minerr=err; bestx=x0; whichit=i; }
             if (err<tol && !forceRun) { ret.flag=0; ret.relres=err; ret.iter=i; return; }
-			if (myfabs((err-lasterr)/lasterr)<1e-6)
+            if (myfabs((err-lasterr)/lasterr)<1e-6 && !forceRun)
 			{
 				streak++;
 				if (streak>=10) { ret.flag=2; ret.relres=err; ret.iter=i; return; }
